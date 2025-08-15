@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رياح - لتوصيل الطلبات    </title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-wind"></i> رياح</h1>
+                <p>بسرعة الرياح وانت مرتاح   </p>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" onclick="showSection('home')">الرئيسية</a>
+                <a href="#" class="nav-link" onclick="showSection('special-offers')">عروض خاصة</a>
+                <a href="#" class="nav-link" onclick="showSection('prices')">الأسعار</a>
+                <a href="#" class="nav-link" onclick="showSection('my-orders')">طلباتي</a>
+                <a href="#" class="nav-link" onclick="showSection('login')">تسجيل الدخول</a>
+                <a href="#" class="nav-link admin-only" onclick="showSection('orders')" style="display:none;">الطلبيات</a>
+                <a href="system-admin.html" class="nav-link system-admin-only" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border-radius: 5px; padding: 8px 12px; margin-right: 10px; display: none;"><i class="fas fa-crown"></i> مدير النظام</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <!-- Banner -->
+            <div class="banner">
+                <div class="banner-content">
+                    <h2>مرحباً بكم في رياح</h2>
+                    <p>اطلب من أفضل موقع لتوصيل الطلبات في ليبيا</p>
+                </div>
+            </div>
+
+            <!-- Custom Order Box -->
+            <div class="custom-order">
+                <div class="container">
+                    <h3>طلب خاص</h3>
+                    <div class="order-form">
+                        <textarea id="customOrder" placeholder="مثال: اريد همبرغر من كباب دجاج دبل من كودو فرع قدح"></textarea>
+                        <button class="btn btn-secondary" onclick="submitCustomOrder()">إرسال الطلب</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Box -->
+            <div class="notifications-section">
+                <div class="container">
+                    <div class="notifications-box">
+                        <h3><i class="fas fa-bell"></i> الإشعارات والأخبار</h3>
+                        <div id="notifications-content" class="notifications-content">
+                            <!-- سيتم تحميل الإشعارات هنا من قبل الأدمن -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat/Order Freeze Control (System Admin Only) -->
+            <div class="freeze-control system-admin-only" style="display: none;">
+                <div class="container">
+                    <div class="freeze-panel">
+                        <h3><i class="fas fa-snowflake"></i> تحكم في تجميد الطلبات والدردشة</h3>
+                        <div class="freeze-buttons">
+                            <button id="freezeToggle" class="btn btn-freeze" onclick="toggleFreeze()">
+                                <i class="fas fa-pause"></i> تجميد الطلبات والدردشة
+                            </button>
+                            <button id="moveLeft" class="btn btn-move" onclick="moveBoxLeft()">
+                                <i class="fas fa-arrow-left"></i> تحريك يسار
+                            </button>
+                            <button id="moveRight" class="btn btn-move" onclick="moveBoxRight()">
+                                <i class="fas fa-arrow-right"></i> تحريك يمين
+                            </button>
+                        </div>
+                        <div class="freeze-status">
+                            <span id="freezeStatus">الحالة: نشط</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panels Access (System Admin Only) -->
+            <div class="control-panels system-admin-only" style="display: none;">
+                <div class="container">
+                    <div class="panels-grid">
+                        <div class="panel-card">
+                            <div class="panel-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3>لوحة تحكم الموقع</h3>
+                            <p>إدارة شاملة للموقع والمحتوى</p>
+                            <a href="admin.html" class="btn btn-panel">دخول</a>
+                        </div>
+                        <div class="panel-card">
+                            <div class="panel-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3>لوحة مدير النظام</h3>
+                            <p>إدارة النظام والإعدادات العامة</p>
+                            <a href="system-admin.html" class="btn btn-panel">دخول</a>
+                        </div>
+                        <div class="panel-card">
+                            <div class="panel-icon">
+                                <i class="fas fa-motorcycle"></i>
+                            </div>
+                            <h3>لوحة تحكم الديليفري</h3>
+                            <p>إدارة طلبات التوصيل والديليفري</p>
+                            <a href="delivery-panel.html" class="btn btn-panel">دخول</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advertisement Box -->
+            <div class="advertisement-section">
+                <div class="container">
+                    <div class="ad-banner">
+                        <h3>عروض خاصة</h3>
+                        <div class="ad-content">
+                            <div class="ad-item">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzNhOGJmZiIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+إعلان 1</dGV4dD4KPC9zdmc+" alt="إعلان 1">
+                                <div class="ad-text">
+                                    <h4>خصم 25% على جميع الطلبات</h4>
+                                    <p>عرض محدود لفترة قصيرة</p>
+                                </div>
+                            </div>
+                            <div class="ad-item">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2U3NGMzYyIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+إعلان 2</dGV4dD4KPC9zdmc+" alt="إعلان 2">
+                                <div class="ad-text">
+                                    <h4>توصيل مجاني للطلبات فوق 30 دينار</h4>
+                                    <p>اطلب الآن واستفد من العرض</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم تعليمات المدراء -->
+            <div class="admin-instructions">
+                <div class="container">
+                    <div class="instructions-card">
+                        <div class="instructions-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h3>تعليمات الوصول إلى لوحة التحكم</h3>
+                        </div>
+                        <div class="instructions-content">
+                            <p><strong>للمدراء:</strong> يمكنك الآن الوصول إلى لوحة التحكم بسهولة!</p>
+                            <ul>
+                                <li><i class="fas fa-check"></i> انقر على زر "لوحة التحكم" في الشريط العلوي</li>
+                                <li><i class="fas fa-check"></i> سيتم إنشاء حساب مدير تلقائياً إذا لم تكن مسجلاً</li>
+                                <li><i class="fas fa-check"></i> ستحصل على صلاحيات المدير تلقائياً</li>
+                                <li><i class="fas fa-check"></i> يمكنك إدارة الطلبات والمستخدمين والأسعار</li>
+                            </ul>
+                            <div class="quick-access">
+                                <a href="admin.html" class="btn btn-admin">
+                                    <i class="fas fa-rocket"></i> دخول سريع إلى لوحة التحكم
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="tab-btn active" onclick="showAuthTab('login')">تسجيل الدخول</button>
+                        <button class="tab-btn" onclick="showAuthTab('register')">إنشاء حساب</button>
+                    </div>
+                    
+                    <div id="loginForm" class="auth-form active">
+                        <h2>تسجيل الدخول</h2>
+                        <form onsubmit="login(event)">
+                            <input type="email" placeholder="البريد الإلكتروني" required>
+                            <input type="password" placeholder="كلمة المرور" required>
+                            <button type="submit" class="btn btn-primary">دخول</button>
+                        </form>
+                        <div class="divider">
+                            <span>أو</span>
+                        </div>
+                        <div class="google-signin">
+                            <div class="g-signin2" data-onsuccess="onGoogleSignIn" data-theme="dark" data-longtitle="true"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="registerForm" class="auth-form">
+                        <h2>إنشاء حساب جديد</h2>
+                        <form onsubmit="register(event)">
+                            <input type="text" placeholder="الاسم الكامل" required>
+                            <input type="email" placeholder="البريد الإلكتروني" required>
+                            <input type="password" placeholder="كلمة المرور" required>
+                            <input type="tel" placeholder="رقم الهاتف" required>
+                            <select required>
+                                <option value="">اختر المنطقة في طرابلس</option>}                                <!-- ةظ؟ظ ظ 10{} -->
+                                <option value="">اختر المنطقة في طرابلس</option>}                                <!-- ةظ؟ظ ظ 10{} -->
+                                <option value="الدهماني">الدهماني</option>
+                                <option value="أبو سليم">أبو سليم</option>
+                                <option value="الأندلس">الأندلس</option>
+                                <option value="الكريمية">الكريمية</option>
+                                <option value="الفرناج">الفرناج</option>
+                                <option value="تاجوراء">تاجوراء</option>
+                                <option value="سوق الجمعة">سوق الجمعة</option>
+                                <option value="قرقارش">قرقارش</option>
+                                <option value="الحدبة">الحدبة</option>
+                                <option value="الصياد">الصياد</option>
+                                <option value="الهضبة">الهضبة</option>
+                                <option value="الزاوية الدهماني">الزاوية الدهماني</option>
+                                <option value="الجفارة">الجفارة</option>
+                            </select>
+                            <div class="location-picker">
+                                <button type="button" class="btn btn-secondary" onclick="pickLocation()">اختيار الموقع على الخريطة</button>
+                                <div id="locationDisplay"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">إنشاء حساب</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <div class="container">
+                <h2>لوحة التحكم</h2>
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" onclick="showDashboardTab('places')">إدارة الأماكن</button>
+                    <button class="tab-btn" onclick="showDashboardTab('users')">إدارة المستخدمين</button>
+                    <button class="tab-btn" onclick="showDashboardTab('orders')">إدارة الطلبات</button>
+                    <button class="tab-btn" onclick="showDashboardTab('delivery')">إدارة الدليفري</button>
+                    <button class="tab-btn" onclick="showDashboardTab('stats')">الإحصائيات</button>
+                    <button class="tab-btn" onclick="showDashboardTab('ads')">إدارة الإعلانات</button>
+                    <button class="tab-btn" onclick="showDashboardTab('offers')">العروض الخاصة</button>
+                </div>
+                
+                <div id="placesTab" class="dashboard-content active">
+                    <h3>إدارة الأماكن</h3>
+                    <button class="btn btn-primary" onclick="showAddPlaceForm()">إضافة مكان جديد</button>
+                    <div id="placesList" class="places-list"></div>
+                </div>
+                
+                <div id="usersTab" class="dashboard-content">
+                    <h3>إدارة المستخدمين</h3>
+                    <div id="usersList" class="users-list"></div>
+                </div>
+                
+                <div id="adsTab" class="dashboard-content">
+                    <h3>إدارة الإعلانات</h3>
+                    <button class="btn btn-primary" onclick="showAddAdForm()">إضافة إعلان</button>
+                    <div id="adsList" class="ads-list"></div>
+                </div>
+                
+                <div id="ordersTab" class="dashboard-content">
+                    <h3>إدارة الطلبات</h3>
+                    <div id="ordersList" class="orders-list"></div>
+                </div>
+                
+                <div id="deliveryTab" class="dashboard-content">
+                    <h3>إدارة الدليفري</h3>
+                    <button class="btn btn-primary" onclick="showAddDeliveryForm()">إضافة دليفري جديد</button>
+                    <div id="deliveryList" class="delivery-list"></div>
+                </div>
+                
+                <div id="statsTab" class="dashboard-content">
+                    <h3>الإحصائيات</h3>
+                    <div class="stats-container">
+                        <div class="stats-row">
+                            <div class="stat-card">
+                                <h4>الزيارات اليومية</h4>
+                                <div class="stat-number" id="dailyVisits">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>الزيارات الشهرية</h4>
+                                <div class="stat-number" id="monthlyVisits">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>الزيارات السنوية</h4>
+                                <div class="stat-number" id="yearlyVisits">0</div>
+                            </div>
+                        </div>
+                        <div class="stats-row">
+                            <div class="stat-card">
+                                <h4>الطلبات اليومية</h4>
+                                <div class="stat-number" id="dailyOrders">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>الطلبات الشهرية</h4>
+                                <div class="stat-number" id="monthlyOrders">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>الطلبات السنوية</h4>
+                                <div class="stat-number" id="yearlyOrders">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="offersTab" class="dashboard-content">
+                    <h3>العروض الخاصة</h3>
+                    <button class="btn btn-primary" onclick="showAddOfferForm()">إضافة عرض</button>
+                    <div id="offersList" class="offers-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders" class="section">
+            <div class="container">
+                <h2>الطلبيات</h2>
+                <div id="ordersList" class="orders-list"></div>
+            </div>
+        </section>
+
+        <!-- Special Offers Section -->
+        <section id="special-offers" class="section">
+            <div class="container">
+                <h2>العروض الخاصة</h2>
+                <div id="specialOffersList" class="offers-grid"></div>
+            </div>
+        </section>
+
+        <!-- My Orders Section -->
+        <section id="my-orders" class="section">
+            <div class="container">
+                <h2>طلباتي</h2>
+                <div class="orders-filter">
+                    <button class="btn btn-secondary active" onclick="filterMyOrders('all')">جميع الطلبات</button>
+                    <button class="btn btn-secondary" onclick="filterMyOrders('pending')">قيد الانتظار</button>
+                    <button class="btn btn-secondary" onclick="filterMyOrders('confirmed')">مؤكدة</button>
+                    <button class="btn btn-secondary" onclick="filterMyOrders('delivered')">تم التوصيل</button>
+                    <button class="btn btn-secondary" onclick="filterMyOrders('cancelled')">ملغية</button>
+                </div>
+                <div id="myOrdersList" class="my-orders-list">
+                    <!-- User orders will be displayed here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 رياح - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="locationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('locationModal')">&times;</span>
+            <h3>اختيار الموقع</h3>
+            <div id="map" style="height: 400px; width: 100%;"></div>
+            <button class="btn btn-primary" onclick="confirmLocation()">تأكيد الموقع</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&callback=initMap" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+</body>
+</html>

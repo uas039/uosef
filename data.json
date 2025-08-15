@@ -1,0 +1,313 @@
+{
+  "places": [
+    {
+      "id": 1,
+      "name": "مطعم الأصالة الليبية",
+      "category": "مطاعم",
+      "city": "طرابلس",
+      "location": "شارع الجمهورية - وسط البلد",
+      "coordinates": { "lat": 32.8872, "lng": 13.1913 },
+      "description": "مطعم ليبي تقليدي يقدم أشهى الأطباق الليبية الأصيلة مثل الكسكسي والبازين والمحشي",
+      "phone": "021-1234567",
+      "rating": 4.5,
+      "priceRange": "متوسط",
+      "workingHours": "9:00 ص - 11:00 م",
+      "delivery": true
+    },
+    {
+      "id": 2,
+      "name": "سوق الخضار المركزي",
+      "category": "أسواق خضار",
+      "city": "بنغازي",
+      "location": "وسط المدينة - قرب الميناء",
+      "coordinates": { "lat": 32.1181, "lng": 20.0680 },
+      "description": "أفضل الخضروات والفواكه الطازجة يومياً من المزارع الليبية",
+      "phone": "061-7654321",
+      "rating": 4.2,
+      "priceRange": "اقتصادي",
+      "workingHours": "6:00 ص - 8:00 م",
+      "delivery": true
+    },
+    {
+      "id": 3,
+      "name": "سوبر ماركت النجمة",
+      "category": "أسواق غذائية",
+      "city": "مصراتة",
+      "location": "شارع طرابلس - المنطقة التجارية",
+      "coordinates": { "lat": 32.3745, "lng": 15.0919 },
+      "description": "جميع احتياجاتك الغذائية والمنزلية في مكان واحد بأفضل الأسعار",
+      "phone": "051-9876543",
+      "rating": 4.0,
+      "priceRange": "متوسط",
+      "workingHours": "8:00 ص - 10:00 م",
+      "delivery": true
+    },
+    {
+      "id": 4,
+      "name": "مطعم البحر الأبيض",
+      "category": "مطاعم",
+      "city": "الزاوية",
+      "location": "الكورنيش - إطلالة على البحر",
+      "coordinates": { "lat": 32.7569, "lng": 12.7277 },
+      "description": "مطعم متخصص في المأكولات البحرية الطازجة مع إطلالة رائعة على البحر",
+      "phone": "023-5555555",
+      "rating": 4.7,
+      "priceRange": "مرتفع",
+      "workingHours": "12:00 ظ - 12:00 ص",
+      "delivery": false
+    },
+    {
+      "id": 5,
+      "name": "سوق التنظيف الشامل",
+      "category": "أسواق تنظيف",
+      "city": "طرابلس",
+      "location": "شارع الفتح - حي الأندلس",
+      "coordinates": { "lat": 32.8925, "lng": 13.1825 },
+      "description": "جميع مستلزمات التنظيف والمواد المنزلية بأجود الأنواع",
+      "phone": "021-2468135",
+      "rating": 3.8,
+      "priceRange": "اقتصادي",
+      "workingHours": "8:00 ص - 9:00 م",
+      "delivery": true
+    },
+    {
+      "id": 6,
+      "name": "سوق الزينة والجمال",
+      "category": "أسواق زينة",
+      "city": "بنغازي",
+      "location": "شارع جمال عبد الناصر",
+      "coordinates": { "lat": 32.1065, "lng": 20.0711 },
+      "description": "مستحضرات التجميل والعطور والإكسسوارات النسائية",
+      "phone": "061-1357924",
+      "rating": 4.3,
+      "priceRange": "متوسط",
+      "workingHours": "10:00 ص - 10:00 م",
+      "delivery": true
+    },
+    {
+      "id": 7,
+      "name": "السوق المنزلي الحديث",
+      "category": "أسواق منزلية",
+      "city": "سبها",
+      "location": "وسط المدينة - السوق المركزي",
+      "coordinates": { "lat": 27.0377, "lng": 14.4283 },
+      "description": "الأثاث والأجهزة المنزلية والديكورات بأحدث التصاميم",
+      "phone": "071-8642097",
+      "rating": 4.1,
+      "priceRange": "متوسط",
+      "workingHours": "9:00 ص - 8:00 م",
+      "delivery": true
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "أحمد محمد الطرابلسي",
+      "email": "admin@riyah.ly",
+      "password": "admin123",
+      "role": "system_admin",
+      "city": "طرابلس",
+      "phone": "091-1234567",
+      "address": "حي الأندلس - شارع الفتح",
+      "joinDate": "2024-01-01",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "name": "فاطمة علي البنغازية",
+      "email": "fatima@example.com",
+      "password": "user123",
+      "role": "customer",
+      "city": "بنغازي",
+      "phone": "092-7654321",
+      "address": "وسط المدينة - شارع جمال عبد الناصر",
+      "joinDate": "2024-01-15",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "name": "محمد سالم المصراتي",
+      "email": "mohamed@example.com",
+      "password": "admin456",
+      "role": "admin",
+      "city": "مصراتة",
+      "phone": "093-1111111",
+      "address": "شارع طرابلس - المنطقة التجارية",
+      "joinDate": "2024-01-10",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "name": "عائشة أحمد الزاوية",
+      "email": "aisha@example.com",
+      "password": "customer123",
+      "role": "customer",
+      "city": "الزاوية",
+      "phone": "094-2222222",
+      "address": "الكورنيش - قرب الميناء",
+      "joinDate": "2024-02-01",
+      "isActive": true
+    }
+  ],
+  "cities": [
+    {
+      "id": 1,
+      "name": "طرابلس",
+      "region": "الغرب",
+      "coordinates": { "lat": 32.8872, "lng": 13.1913 },
+      "population": 1150000,
+      "isCapital": true
+    },
+    {
+      "id": 2,
+      "name": "بنغازي",
+      "region": "الشرق",
+      "coordinates": { "lat": 32.1181, "lng": 20.0680 },
+      "population": 650000,
+      "isCapital": false
+    },
+    {
+      "id": 3,
+      "name": "مصراتة",
+      "region": "الوسط",
+      "coordinates": { "lat": 32.3745, "lng": 15.0919 },
+      "population": 550000,
+      "isCapital": false
+    },
+    {
+      "id": 4,
+      "name": "الزاوية",
+      "region": "الغرب",
+      "coordinates": { "lat": 32.7569, "lng": 12.7277 },
+      "population": 290000,
+      "isCapital": false
+    },
+    {
+      "id": 5,
+      "name": "سبها",
+      "region": "الجنوب",
+      "coordinates": { "lat": 27.0377, "lng": 14.4283 },
+      "population": 130000,
+      "isCapital": false
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "مطاعم",
+      "icon": "fas fa-utensils",
+      "description": "المطاعم والمقاهي",
+      "color": "#e74c3c"
+    },
+    {
+      "id": 2,
+      "name": "أسواق غذائية",
+      "icon": "fas fa-shopping-cart",
+      "description": "السوبر ماركت والبقالات",
+      "color": "#27ae60"
+    },
+    {
+      "id": 3,
+      "name": "أسواق تنظيف",
+      "icon": "fas fa-broom",
+      "description": "مستلزمات التنظيف والمواد المنزلية",
+      "color": "#3498db"
+    },
+    {
+      "id": 4,
+      "name": "أسواق منزلية",
+      "icon": "fas fa-home",
+      "description": "الأثاث والأجهزة المنزلية",
+      "color": "#f39c12"
+    },
+    {
+      "id": 5,
+      "name": "أسواق زينة",
+      "icon": "fas fa-gem",
+      "description": "مستحضرات التجميل والإكسسوارات",
+      "color": "#9b59b6"
+    },
+    {
+      "id": 6,
+      "name": "أسواق خضار",
+      "icon": "fas fa-carrot",
+      "description": "الخضروات والفواكه الطازجة",
+      "color": "#2ecc71"
+    }
+  ],
+  "offers": [
+    {
+      "id": 1,
+      "title": "خصم 20% على جميع الوجبات",
+      "description": "عرض خاص لفترة محدودة في مطعم الأصالة الليبية - استمتع بأشهى الأطباق الليبية بخصم مميز",
+      "placeId": 1,
+      "placeName": "مطعم الأصالة الليبية",
+      "discount": 20,
+      "validFrom": "2024-01-01",
+      "validUntil": "2024-12-31",
+      "isActive": true,
+      "terms": "العرض ساري على جميع الوجبات عدا المشروبات"
+    },
+    {
+      "id": 2,
+      "title": "توصيل مجاني للطلبات فوق 50 دينار",
+      "description": "خدمة التوصيل المجاني من سوبر ماركت النجمة لجميع أنحاء مصراتة",
+      "placeId": 3,
+      "placeName": "سوبر ماركت النجمة",
+      "discount": 0,
+      "validFrom": "2024-01-01",
+      "validUntil": "2024-12-25",
+      "isActive": true,
+      "terms": "العرض ساري على الطلبات التي تزيد عن 50 دينار ليبي"
+    },
+    {
+      "id": 3,
+      "title": "خصم 15% على المأكولات البحرية",
+      "description": "عرض خاص في مطعم البحر الأبيض على جميع أطباق السمك والمأكولات البحرية",
+      "placeId": 4,
+      "placeName": "مطعم البحر الأبيض",
+      "discount": 15,
+      "validFrom": "2024-01-15",
+      "validUntil": "2024-06-30",
+      "isActive": true,
+      "terms": "العرض ساري من الأحد إلى الخميس فقط"
+    }
+  ],
+  "ads": [
+    {
+      "id": 1,
+      "title": "افتتاح فرع جديد لسوبر ماركت النجمة",
+      "description": "نعلن عن افتتاح فرع جديد في وسط مصراتة بخصومات تصل إلى 30%",
+      "image": "banner1.jpg",
+      "link": "#",
+      "isActive": true,
+      "startDate": "2024-01-01",
+      "endDate": "2024-03-31",
+      "position": "main_banner"
+    },
+    {
+      "id": 2,
+      "title": "مهرجان الطعام الليبي",
+      "description": "انضم إلينا في مهرجان الطعام الليبي الأول من نوعه",
+      "image": "banner2.jpg",
+      "link": "#",
+      "isActive": true,
+      "startDate": "2024-02-01",
+      "endDate": "2024-02-28",
+      "position": "side_banner"
+    }
+  ],
+  "orders": [],
+  "settings": {
+    "siteName": "رياح",
+    "currency": "دينار ليبي",
+    "currencySymbol": "د.ل",
+    "language": "ar",
+    "timezone": "Africa/Tripoli",
+    "deliveryFee": 5,
+    "freeDeliveryMinimum": 50,
+    "supportPhone": "021-1234567",
+    "supportEmail": "support@riyah.ly",
+    "googleMapsApiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+  }
+}

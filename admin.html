@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - رياح</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3a8bff;
+            --secondary-color: #e74c3c;
+            --accent-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            box-shadow: var(--shadow);
+        }
+        
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+        
+        .admin-sidebar {
+            width: 250px;
+            background: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar h3 {
+            padding: 0 20px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+        
+        .admin-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .admin-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .admin-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-right: 3px solid transparent;
+        }
+        
+        .admin-menu a:hover, .admin-menu a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-right: 3px solid var(--primary-color);
+        }
+        
+        .admin-menu a i {
+            margin-left: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .admin-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn {
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2980b9, var(--primary-color));
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-color), #27ae60);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #27ae60, var(--accent-color));
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--secondary-color), #c0392b);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c0392b, var(--secondary-color));
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f1f1f1;
+            color: #555;
+            border: 1px solid #ddd;
+            box-shadow: none;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9e9e9;
+            color: #333;
+        }
+        
+        .btn-secondary.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-danger {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .form-container input, .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .order-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-content {
+            padding: 15px;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: flex-end;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .user-info i {
+            margin-left: 10px;
+            color: var(--primary-color);
+            width: 20px;
+            text-align: center;
+        }
+        
+        .user-details {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .user-info.highlight {
+            background-color: rgba(58, 139, 255, 0.1);
+            padding: 8px;
+            border-radius: 6px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .call-btn {
+            margin-right: 10px;
+            background: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .call-btn:hover {
+            background: #27ae60;
+            transform: scale(1.1);
+        }
+        
+        .order-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .order-details h4 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .order-details h4 i {
+            margin-left: 8px;
+            color: var(--primary-color);
+        }
+        
+        .order-details p {
+            line-height: 1.6;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .status-badge:before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 5px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .status-pending {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .status-confirmed {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .status-delivered {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .status-cancelled {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .order-date {
+            font-size: 0.9rem;
+            color: #777;
+            display: flex;
+            align-items: center;
+        }
+        
+        .order-date i {
+            margin-left: 5px;
+        }
+        
+        /* أنماط الإحصائيات */
+        .orders-stats {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-left: 15px;
+        }
+        
+        .stat-icon.pending {
+            background: #f39c12;
+        }
+        
+        .stat-icon.success {
+            background: var(--accent-color);
+        }
+        
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        /* تحسين مظهر قائمة الطلبات */
+        .admin-orders-list {
+            margin-top: 20px;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .order-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-content {
+            padding: 15px;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand"><i class="fas fa-wind"></i> رياح - لوحة التحكم</div>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> العودة للموقع الرئيسي</a>
+                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <h3><i class="fas fa-tachometer-alt"></i> لوحة التحكم</h3>
+            <ul class="admin-menu">
+                <li><a href="#" onclick="showDashboardTab('dashboard')" class="active"><i class="fas fa-tachometer-alt"></i> الرئيسية</a></li>
+                <li><a href="#" onclick="showDashboardTab('places')"><i class="fas fa-map-marker-alt"></i> إدارة الأماكن</a></li>
+                <li><a href="#" onclick="showDashboardTab('users')"><i class="fas fa-users"></i> إدارة المستخدمين</a></li>
+                <li><a href="#" onclick="showDashboardTab('offers')"><i class="fas fa-gift"></i> إدارة العروض</a></li>
+                <li><a href="#" onclick="showDashboardTab('orders')"><i class="fas fa-shopping-cart"></i> إدارة الطلبات</a></li>
+                <li><a href="#" onclick="showDashboardTab('delivery')"><i class="fas fa-truck"></i> إدارة التوصيل</a></li>
+                <li><a href="#" onclick="showDashboardTab('delivery-management')"><i class="fas fa-motorcycle"></i> إدارة الديليفري</a></li>
+                <li><a href="#" onclick="showDashboardTab('stats')"><i class="fas fa-chart-bar"></i> الإحصائيات</a></li>
+                <li><a href="#" onclick="showDashboardTab('prices')"><i class="fas fa-tag"></i> إدارة الأسعار</a></li>
+                <li><a href="#" onclick="showDashboardTab('notifications')"><i class="fas fa-bell"></i> إدارة الإشعارات</a></li>
+                <li><a href="#" onclick="showDashboardTab('settings')"><i class="fas fa-cog"></i> الإعدادات</a></li>
+            </ul>
+        </div>
+
+        <div class="admin-content">
+            <!-- الرئيسية -->
+            <div id="dashboard-tab" class="tab-content active">
+                <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم الرئيسية</h2>
+                <div class="dashboard-overview">
+                    <div class="overview-cards">
+                        <div class="overview-card">
+                            <div class="card-icon"><i class="fas fa-users"></i></div>
+                            <div class="card-info">
+                                <h3 id="totalUsers">0</h3>
+                                <p>إجمالي المستخدمين</p>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <div class="card-info">
+                                <h3 id="totalOrders">0</h3>
+                                <p>إجمالي الطلبات</p>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon"><i class="fas fa-motorcycle"></i></div>
+                            <div class="card-info">
+                                <h3 id="totalDelivery">0</h3>
+                                <p>عدد الديليفري</p>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div class="card-info">
+                                <h3 id="totalRevenue">0</h3>
+                                <p>إجمالي الإيرادات</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recent-activities">
+                        <h3>النشاطات الأخيرة</h3>
+                        <div id="recentActivities"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الأماكن -->
+            <div id="places-tab" class="tab-content">
+                <h2>إدارة الأماكن</h2>
+                <button onclick="showAddPlaceForm()" class="btn btn-primary">إضافة مكان جديد</button>
+                <div id="places-list"></div>
+            </div>
+
+            <!-- إدارة المستخدمين -->
+            <div id="users-tab" class="tab-content">
+                <h2>إدارة المستخدمين</h2>
+                <div id="users-list"></div>
+            </div>
+
+            <!-- إدارة العروض -->
+            <div id="offers-tab" class="tab-content">
+                <h2>إدارة العروض</h2>
+                <button onclick="showAddOfferForm()" class="btn btn-primary">إضافة عرض جديد</button>
+                <div id="offers-list"></div>
+            </div>
+
+            <!-- إدارة الطلبات -->
+            <div id="orders-tab" class="tab-content">
+                <h2><i class="fas fa-shopping-cart"></i> إدارة الطلبات</h2>
+                <div class="orders-filter">
+                    <button class="btn btn-secondary active" onclick="filterAdminOrders('all')">
+                        <i class="fas fa-list"></i> جميع الطلبات
+                    </button>
+                    <button class="btn btn-secondary" onclick="filterAdminOrders('pending')">
+                        <i class="fas fa-clock"></i> قيد الانتظار
+                    </button>
+                    <button class="btn btn-secondary" onclick="filterAdminOrders('confirmed')">
+                        <i class="fas fa-check-circle"></i> مؤكدة
+                    </button>
+                    <button class="btn btn-secondary" onclick="filterAdminOrders('delivered')">
+                        <i class="fas fa-truck"></i> تم التوصيل
+                    </button>
+                    <button class="btn btn-secondary" onclick="filterAdminOrders('cancelled')">
+                        <i class="fas fa-times-circle"></i> ملغية
+                    </button>
+                </div>
+                <div class="orders-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">24</span>
+                            <span class="stat-label">إجمالي الطلبات</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">قيد الانتظار</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">تم التوصيل</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="admin-orders-list" class="admin-orders-list">
+                    <!-- نموذج لعرض الطلبات -->
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <span class="order-id">طلب #123</span>
+                                <span class="status-badge status-pending">قيد الانتظار</span>
+                            </div>
+                            <div class="order-date"><i class="fas fa-calendar-alt"></i> 2024-06-10 10:30</div>
+                        </div>
+                        <div class="order-content">
+                            <div class="user-details">
+                                <div class="user-info">
+                                    <i class="fas fa-user"></i>
+                                    <span>محمد أحمد</span>
+                                </div>
+                                <div class="user-info highlight">
+                                    <i class="fas fa-phone"></i>
+                                    <span>0912345678</span>
+                                    <a href="tel:0912345678" class="call-btn"><i class="fas fa-phone-alt"></i></a>
+                                </div>
+                                <div class="user-info">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>الكريمية، شارع العسل</span>
+                                </div>
+                            </div>
+                            <div class="order-details">
+                                <h4><i class="fas fa-utensils"></i> تفاصيل الطلب</h4>
+                                <p>اريد همبرغر من كباب دجاج دبل من كودو فرع قدح</p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn btn-success" onclick="acceptOrder(123)">
+                                    <i class="fas fa-check"></i> قبول الطلب
+                                </button>
+                                <button class="btn btn-primary" onclick="assignDelivery(123)">
+                                    <i class="fas fa-motorcycle"></i> تعيين موصل
+                                </button>
+                                <button class="btn btn-danger" onclick="cancelOrder(123)">
+                                    <i class="fas fa-times"></i> إلغاء
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة التوصيل -->
+            <div id="delivery-tab" class="tab-content">
+                <h2>إدارة التوصيل</h2>
+                <button onclick="showAddDeliveryForm()" class="btn btn-primary add-delivery-btn">إضافة موصل جديد</button>
+                <div id="delivery-list"></div>
+            </div>
+
+            <!-- إدارة الديليفري -->
+            <div id="delivery-management-tab" class="tab-content">
+                <h2>إدارة الديليفري</h2>
+                <div class="delivery-management-container">
+                    <div class="delivery-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>5</h3>
+                                <p>إجمالي الموصلين</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-motorcycle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>3</h3>
+                                <p>موصلين متاحين</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>2</h3>
+                                <p>في مهمة توصيل</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-actions">
+                        <button class="btn btn-primary" onclick="addDeliveryPerson()"><i class="fas fa-plus"></i> إضافة موصل جديد</button>
+                        <button class="btn btn-success" onclick="viewDeliveryReports()"><i class="fas fa-chart-line"></i> تقارير التوصيل</button>
+                    </div>
+                    
+                    <div class="delivery-list">
+                        <h3>قائمة الموصلين</h3>
+                        <div class="delivery-person-card">
+                            <div class="delivery-info">
+                                <div class="delivery-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="delivery-details">
+                                    <h4>أحمد محمد</h4>
+                                    <p><i class="fas fa-phone"></i> 0912345678</p>
+                                    <p><i class="fas fa-motorcycle"></i> دراجة نارية</p>
+                                </div>
+                            </div>
+                            <div class="delivery-status">
+                                <span class="status-badge available">متاح</span>
+                            </div>
+                            <div class="delivery-actions">
+                                <button class="btn btn-sm btn-primary" onclick="assignOrder(1)">تعيين طلب</button>
+                                <button class="btn btn-sm btn-secondary" onclick="editDeliveryPerson(1)">تعديل</button>
+                                <button class="btn btn-sm btn-danger" onclick="removeDeliveryPerson(1)">حذف</button>
+                            </div>
+                        </div>
+                        
+                        <div class="delivery-person-card">
+                            <div class="delivery-info">
+                                <div class="delivery-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="delivery-details">
+                                    <h4>محمد علي</h4>
+                                    <p><i class="fas fa-phone"></i> 0923456789</p>
+                                    <p><i class="fas fa-car"></i> سيارة</p>
+                                </div>
+                            </div>
+                            <div class="delivery-status">
+                                <span class="status-badge busy">في مهمة</span>
+                            </div>
+                            <div class="delivery-actions">
+                                <button class="btn btn-sm btn-warning" onclick="trackDelivery(2)">تتبع</button>
+                                <button class="btn btn-sm btn-secondary" onclick="editDeliveryPerson(2)">تعديل</button>
+                                <button class="btn btn-sm btn-danger" onclick="removeDeliveryPerson(2)">حذف</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الإحصائيات -->
+            <div id="stats-tab" class="tab-content">
+                <h2>الإحصائيات</h2>
+                <div id="stats-container"></div>
+            </div>
+
+            <!-- إدارة الأسعار -->
+            <div id="prices-tab" class="tab-content">
+                <h2>إدارة أسعار التوصيل</h2>
+                <button onclick="showAddPriceForm()" class="btn btn-primary">إضافة سعر جديد</button>
+                <div id="prices-list"></div>
+                
+                <div id="add-price-form" class="form-container" style="display: none;">
+                    <h3>إضافة سعر توصيل جديد</h3>
+                    <form onsubmit="addDeliveryPrice(event)">
+                        <input type="text" id="area-name" placeholder="اسم المنطقة" required>
+                        <input type="number" id="delivery-price" placeholder="سعر التوصيل (دينار)" step="0.5" required>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">إضافة</button>
+                            <button type="button" onclick="hideAddPriceForm()" class="btn btn-secondary">إلغاء</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- إدارة الإشعارات -->
+            <div id="notifications-tab" class="tab-content">
+                <h2>إدارة الإشعارات والأخبار</h2>
+                <div class="notification-form">
+                    <h3>إضافة إشعار جديد</h3>
+                    <textarea id="notification-text" placeholder="اكتب الإشعار أو الخبر هنا..." rows="4"></textarea>
+                    <div class="form-actions">
+                        <button onclick="addNotification()" class="btn btn-primary">إضافة إشعار</button>
+                        <button onclick="clearNotifications()" class="btn btn-danger">مسح جميع الإشعارات</button>
+                    </div>
+                </div>
+                <div id="notifications-list">
+                    <h3>الإشعارات الحالية</h3>
+                    <div id="current-notifications"></div>
+                </div>
+            </div>
+
+            <!-- الإعدادات -->
+            <div id="settings-tab" class="tab-content">
+                <h2><i class="fas fa-cog"></i> إعدادات النظام</h2>
+                <div class="settings-sections">
+                    <div class="settings-section">
+                        <h3>إعدادات عامة</h3>
+                        <div class="setting-item">
+                            <label>اسم الموقع:</label>
+                            <input type="text" id="siteName" value="رياح" placeholder="اسم الموقع">
+                        </div>
+                        <div class="setting-item">
+                            <label>وصف الموقع:</label>
+                            <input type="text" id="siteDescription" value="بسرعة الرياح وانت مرتاح" placeholder="وصف الموقع">
+                        </div>
+                        <div class="setting-item">
+                            <label>رقم الدعم الفني:</label>
+                            <input type="text" id="supportPhone" placeholder="رقم الدعم الفني">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>إعدادات التوصيل</h3>
+                        <div class="setting-item">
+                            <label>الحد الأدنى للطلب:</label>
+                            <input type="number" id="minOrder" placeholder="الحد الأدنى للطلب" step="0.5">
+                        </div>
+                        <div class="setting-item">
+                            <label>رسوم التوصيل الافتراضية:</label>
+                            <input type="number" id="defaultDeliveryFee" placeholder="رسوم التوصيل" step="0.5">
+                        </div>
+                        <div class="setting-item">
+                            <label>وقت التوصيل المتوقع (دقيقة):</label>
+                            <input type="number" id="estimatedDeliveryTime" placeholder="وقت التوصيل المتوقع">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>إعدادات الإشعارات</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="emailNotifications"> إرسال إشعارات البريد الإلكتروني
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="smsNotifications"> إرسال إشعارات الرسائل النصية
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="pushNotifications"> الإشعارات الفورية
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>إعدادات الأمان</h3>
+                        <div class="setting-item">
+                            <label>تغيير كلمة مرور المدير:</label>
+                            <input type="password" id="newAdminPassword" placeholder="كلمة المرور الجديدة">
+                        </div>
+                        <div class="setting-item">
+                            <label>تأكيد كلمة المرور:</label>
+                            <input type="password" id="confirmAdminPassword" placeholder="تأكيد كلمة المرور">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-actions">
+                        <button onclick="saveSettings()" class="btn btn-success">
+                            <i class="fas fa-save"></i> حفظ الإعدادات
+                        </button>
+                        <button onclick="resetSettings()" class="btn btn-warning">
+                            <i class="fas fa-undo"></i> إعادة تعيين
+                        </button>
+                        <button onclick="exportData()" class="btn btn-info">
+                            <i class="fas fa-download"></i> تصدير البيانات
+                        </button>
+                        <button onclick="importData()" class="btn btn-secondary">
+                            <i class="fas fa-upload"></i> استيراد البيانات
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // التحقق من صلاحيات الأدمن (مبسط)
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            // إذا لم يكن هناك مستخدم مسجل، إنشاء مدير افتراضي
+            if (!currentUser || !currentUser.id) {
+                // إنشاء مدير افتراضي للدخول السريع
+                const adminUser = {
+                    id: 'admin_001',
+                    name: 'مدير النظام',
+                    email: 'admin@riyah.com',
+                    phone: '0912345678',
+                    isAdmin: true,
+                    area: 'طرابلس'
+                };
+                localStorage.setItem('currentUser', JSON.stringify(adminUser));
+                currentUser = adminUser;
+                console.log('تم إنشاء حساب مدير افتراضي للدخول');
+            }
+            
+            // التحقق البسيط من صلاحيات المدير
+            if (!currentUser.isAdmin) {
+                // إذا لم يكن مدير، جعله مدير تلقائياً
+                currentUser.isAdmin = true;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                console.log('تم منح صلاحيات المدير للمستخدم الحالي');
+            }
+            
+            // إضافة اسم المستخدم في الشريط العلوي
+            const navBrand = document.querySelector('.nav-brand');
+            navBrand.innerHTML += ` <span class="admin-name">| مرحباً ${currentUser.name || 'المدير'}</span>`;
+            
+            // عرض رسالة ترحيب
+            setTimeout(() => {
+                alert(`مرحباً بك في لوحة التحكم، ${currentUser.name || 'المدير'}!`);
+            }, 500);
+            
+            // تحميل البيانات الأولية
+            if (typeof loadPlaces === 'function') {
+                loadPlaces();
+            }
+            
+            // إضافة مستمع للأحداث للتحقق من تسجيل الخروج
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'currentUser' && (!e.newValue || e.newValue === '{}')) {
+                    console.log('تم تسجيل الخروج');
+                    // لا نعيد التوجيه تلقائياً، نترك المستخدم يقرر
+                }
+            });
+        });
+        
+        // دالة قبول الطلب
+        function acceptOrder(orderId) {
+            // تنفيذ عملية قبول الطلب
+            console.log('تم قبول الطلب رقم: ' + orderId);
+            alert('تم قبول الطلب بنجاح');
+            // هنا يمكن إضافة الكود الخاص بتحديث حالة الطلب في قاعدة البيانات
+        }
+        
+        // دالة تصفية الطلبات
+        function filterAdminOrders(status) {
+            // تنفيذ عملية تصفية الطلبات حسب الحالة
+            console.log('تصفية الطلبات حسب: ' + status);
+            // تحديث زر التصفية النشط
+            document.querySelectorAll('.orders-filter .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.orders-filter .btn[onclick="filterAdminOrders('${status}')"]`).classList.add('active');
+            // هنا يمكن إضافة الكود الخاص بتحديث قائمة الطلبات حسب الحالة
+        }
+    </script>
+</body>
+</html>
